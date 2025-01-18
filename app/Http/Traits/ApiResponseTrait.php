@@ -15,6 +15,6 @@ trait ApiResponseTrait
             'status' => $status,
 
         ];
-        return response($response);
+        return response()->json($response, $status);
     }
 }

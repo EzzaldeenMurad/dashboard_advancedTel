@@ -11,7 +11,7 @@ class OperationRequst extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth('user')->check();
+        return true;
     }
 
     /**

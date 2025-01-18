@@ -5,27 +5,20 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admins\CreateAdminRequest;
 use App\Http\Requests\Admins\LoginAdminRequest;
-use App\Http\Services\Auth\AdminServices;
 use App\Http\Traits\ApiResponseTrait;
+use App\Services\AdminService;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
 class AdminController extends Controller
 {
     use ApiResponseTrait;
-    public AdminServices $adminService;
+    public  $adminService;
 
-    public function __construct(AdminServices $adminService)
+    public function __construct(AdminService $adminService)
     {
         $this->adminService = $adminService;
     }
-
-    // public function admin()
-    // {
-    //     $admin = Auth::guard('admin')->user();
-    //     $response = AdminResource::collection(User::where('id', $admin->id)->get());
-    //     return $this->apiResponse($response, 'تم عرض  المشرف   بنجاح', Response::HTTP_OK);
-    // }
 
     public function register(CreateAdminRequest $request)
     {
@@ -64,17 +57,4 @@ class AdminController extends Controller
         }
     }
 
-    public function getBalance()
-    {
-        if (!Auth::check()) {
-            return $this->apiResponse(null, 'Un authorised', Response::HTTP_UNAUTHORIZED);
-        }
-        return $this->apiResponse($this->adminService->getBalance());
-    }
-
-    public function adminInfo()
-    {
-        $admin = auth()->user();
-        return $this->apiResponse($admin, 'تم عرض المشرف بنجاح', Response::HTTP_OK);
-    }
 }

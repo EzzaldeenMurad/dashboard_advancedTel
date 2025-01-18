@@ -9,6 +9,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Http\Services\Auth\UserServices;
 use App\Http\Traits\ApiResponseTrait;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,9 +17,9 @@ use Symfony\Component\HttpFoundation\Response;
 class UserController extends Controller
 {
     use ApiResponseTrait;
-    public UserServices $userService;
+    public  $userService;
 
-    public function __construct(UserServices $userService)
+    public function __construct(UserService  $userService)
     {
         $this->userService = $userService;
     }
@@ -61,18 +62,4 @@ class UserController extends Controller
         }
     }
 
-    public function getBalance()
-    {
-        if (!Auth::check()) {
-            return $this->apiResponse(null, 'Un authorised', Response::HTTP_UNAUTHORIZED);
-        }
-
-        return $this->apiResponse($this->userService->getBalance());
-    }
-    public function userInfo()
-    {
-        // $user = auth()->user();
-        $response = UserResource::collection(auth()->user());
-        return $this->apiResponse($response, 'تم عرض المستخدم بنجاح', Response::HTTP_OK);
-    }
 }
