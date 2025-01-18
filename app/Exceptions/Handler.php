@@ -46,25 +46,25 @@ class Handler extends ExceptionHandler
 
         // return $this->handleWebException($exception);
 
-        // if ($exception instanceof RouteNotFoundException || $exception instanceof NotFoundHttpException) {
-        //     return  $this->apiResponse(null, 'Route not found', Response::HTTP_NOT_FOUND); //response()->view('errors.route-not-found', [], 404);
-        // }
-        // if ($exception instanceof MethodNotAllowedHttpException) {
-        //     return $this->apiResponse(null, $exception->getMessage(), Response::HTTP_METHOD_NOT_ALLOWED);
-        // }
+        if ($exception instanceof RouteNotFoundException || $exception instanceof NotFoundHttpException) {
+            return  $this->apiResponse(null, 'Route not found', Response::HTTP_NOT_FOUND); //response()->view('errors.route-not-found', [], 404);
+        }
+        if ($exception instanceof MethodNotAllowedHttpException) {
+            return $this->apiResponse(null, $exception->getMessage(), Response::HTTP_METHOD_NOT_ALLOWED);
+        }
 
-        // if ($exception instanceof ModelNotFoundException) {
-        //     return $this->apiResponse(null, 'Model not found', Response::HTTP_NOT_FOUND);
-        // }
-        // if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
-        //     return  response()->redirect('/');
-        // }
+        if ($exception instanceof ModelNotFoundException) {
+            return $this->apiResponse(null, 'Model not found', Response::HTTP_NOT_FOUND);
+        }
+        if ($exception instanceof \Illuminate\Session\TokenMismatchException) {
+            return  response()->redirect('/');
+        }
 
-        // if ($exception instanceof AuthorizationException) {
-        //     return response()->json([
-        //         'error' => 'Unauthorized action.',
-        //     ], 403);
-        // }
+        if ($exception instanceof AuthorizationException) {
+            return response()->json([
+                'error' => 'Unauthorized action.',
+            ], 403);
+        }
         return parent::render($request, $exception);
     }
 

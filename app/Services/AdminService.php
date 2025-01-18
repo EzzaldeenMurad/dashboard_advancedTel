@@ -24,7 +24,7 @@ class AdminService
         return $this->adminRepository->create($credentials);
     }
 
-    public function getAdmin()
+    public function getAdmins()
     {
         return $this->adminRepository->all();
     }
